@@ -1,0 +1,47 @@
+# price_banner: The {product} costs {price, number, USD}
+
+# market: 市场
+# pleaseChoose: 请选择
+# region: 地区
+# city: 城市
+# describe: 描述
+# operation: 操作
+# reportWait: Report生成中，请稍候...
+# Loading: Loading...
+# downloadWait: 即将开始下载，请稍候...
+# CHC: CHC
+# search: 搜索
+# download: download
+# Company: 公司：
+# title: 不止于数据，让决策更精彩
+# Cancellation: 注销
+# pharbersCHC: Pharbers CHC
+
+login:
+  name: "DataSpell"
+  welcome: "Welcome To DataSpell"
+  email: "Email"
+  verifyEmail: "Continue With Email"
+  changeEmail: "Change the Email"
+  checkEmail: "Check your Email for a code"
+  sendText1: "We’ve sent to "
+  sendText2: " a 6-digit code to your email. The code expires shortly, so please enter it soon."
+  verify: "Verify Code"
+  resend: "Resend code"
+  setAccount: "Set your account"
+  password: "Password"
+  username: "Username"
+  fullname: "Full Name"
+  forgotPassword: "Forgot Password"
+  signIn: "Sign In"
+  signInTo: "Sign in to DataSpell"
+  confirm: "Confirm"
+  resetPassword: Reset Password
+  newPassword: New Password
+  confirmPassword: Confirm New Password
+  success: Success
+  successText: You‘ve changed the password of your account
+account-center:
+  currentPasswordErrorBox: "The password is wrong, please re-enter"
+  confirmPasswordEmpty: "The confirmation password cannot be empty, please re-enter the password"
+  confirmPasswordErrorBox: "The two passwords are inconsistent, please re-enter the password"

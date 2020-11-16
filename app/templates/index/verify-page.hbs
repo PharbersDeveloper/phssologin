@@ -1,0 +1,18 @@
+{{#bp-column-layout classNames="check-email-code"}}
+    {{#bp-row-layout crossAxis="cross-center"  classNames="cursor-pointer" click=(action (mut changePage) "welcomePage")}}
+        {{bp-icon iconName="" color="" classNames="icon_chevron-left"}}
+        {{#bp-text classNames="breadcrumbs_Initial"}}{{t "login.changeEmail"}}{{/bp-text}}
+    {{/bp-row-layout}}
+    {{#bp-text classNames="heading-large check-email-text"}}{{t "login.checkEmail"}}{{/bp-text}}
+    {{#bp-text classNames="body-primary"}}{{t "login.sendText1"}}{{#bp-text classNames="heading-small"}}{{userEmail}}{{/bp-text}}{{t "login.sendText2"}}{{/bp-text}}
+    {{#bp-text classNames="heading-xsmall verify-text"}}{{t "login.verify"}}{{/bp-text}}
+    {{#bp-row-layout classNames="code-input"}}
+        {{bp-input type='tel' placeholder='' value=verifyCode0 maxlength="1" classNames='input_initial mr-1' id="code0" keyUp=(action "codeInputchange" 0)}}
+        {{bp-input type='tel' placeholder='' value=verifyCode1 maxlength="1" classNames='input_initial mr-1' id="code1" keyUp=(action "codeInputchange" 1)}}
+        {{bp-input type='tel' placeholder='' value=verifyCode2 maxlength="1" classNames='input_initial mr-1' id="code2" keyUp=(action "codeInputchange" 2)}}
+        {{bp-input type='tel' placeholder='' value=verifyCode3 maxlength="1" classNames='input_initial mr-1' id="code3" keyUp=(action "codeInputchange" 3)}}
+        {{bp-input type='tel' placeholder='' value=verifyCode4 maxlength="1" classNames='input_initial mr-1' id="code4" keyUp=(action "codeInputchange" 4)}}
+        {{bp-input type='tel' placeholder='' value=verifyCode5 maxlength="1" classNames='input_initial' id="code5" keyUp=(action "codeInputchange" 5)}}
+    {{/bp-row-layout}}
+    {{#bp-text classNames="btn_secondary_initial mt-3"}}{{t "login.resend"}} {{/bp-text}}
+{{/bp-column-layout}}

@@ -1,0 +1,11 @@
+{{#bp-column-layout classNames="sign-in-page"}}
+    {{#bp-row-layout crossAxis="cross-center"  classNames="cursor-pointer" click=(action "toWelcomePage")}}
+        {{bp-icon iconName="" color="" classNames="icon_chevron-left"}}
+        {{#bp-text classNames="breadcrumbs_Initial"}}{{t "login.changeEmail"}}{{/bp-text}}
+    {{/bp-row-layout}}
+    {{#bp-text classNames="heading-large mt-2"}}{{t "login.signInTo"}}{{/bp-text}}
+    {{#bp-text classNames="heading-xsmall password-page"}}{{t "login.password"}}{{/bp-text}}
+    {{bp-input value=password type='password' placeholder='' classNames="input_initial"}}
+    {{#bp-text classNames="link_primary cursor-pointer mt-2" click=(action "forgotPassword")}}{{t "login.forgotPassword"}}{{/bp-text}}
+    {{#bp-button text=(t "login.signIn") classNames="btn_primary mt-integer-2" click=(action "signIn") id="signInButton" disabled=signInDisabled}}{{/bp-button}}
+{{/bp-column-layout}}

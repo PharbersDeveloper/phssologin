@@ -1,0 +1,18 @@
+{{#bp-column-layout classNames="account-setting"}}
+    {{#bp-text classNames="heading-large"}}{{t "login.setAccount"}}{{/bp-text}}
+
+    {{#bp-text classNames="heading-xsmall user-name-text"}}{{t "login.username"}}{{/bp-text}}
+    {{bp-input value=userName type='text' placeholder='' classNames="input_initial"}}
+
+    {{#bp-text classNames="heading-xsmall mt-integer-2"}}{{t "login.fullname"}}{{/bp-text}}
+    {{#bp-row-layout classNames="name-area"}}
+        <form autocomplete="off">
+            {{bp-input value=firstName type='text' placeholder='First Name' classNames="input_initial mr-1"}}
+            {{bp-input value=lastName type='text' placeholder='Last Name' classNames="input_initial"}}
+        </form>
+    {{/bp-row-layout}}
+
+    {{#bp-text classNames="heading-xsmall mt-integer-2"}}{{t "login.password"}}{{/bp-text}}
+    {{bp-input value=password type='text' placeholder='' classNames="password-input input_initial"}}
+    {{#bp-button text=(t "login.welcome") classNames="btn_standard mt-integer-2" click=(action "accountSetting") disabled=(bp-inverse accountSuccess)}}{{/bp-button}}
+{{/bp-column-layout}}	

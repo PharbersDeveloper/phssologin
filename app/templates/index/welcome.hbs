@@ -1,0 +1,13 @@
+{{#bp-column-layout classNames="welcome-page"}}
+    {{#bp-text classNames="heading-large welcome-text"}}{{t "login.welcome"}}{{/bp-text}}
+    {{#bp-text classNames="heading-xsmall"}}{{t "login.email"}}{{/bp-text}}
+    {{bp-input type='email' placeholder='' value=userEmail classNames='input_initial'}}
+    {{#if (bp-eq emailRight false)}}
+        {{#bp-row-layout classNames="mt-1"}}
+            {{bp-icon iconName='' color='' classNames="icon_error"}}
+            {{#bp-text classNames="tertiary-Destructive"}}Error messages text goes here{{/bp-text}}
+        {{/bp-row-layout}}
+    {{/if}}
+    {{!-- 按下按键首先判断email格式，正确之后需要判断此邮箱是否在系统内 --}}
+    {{#bp-button text=(t "login.verifyEmail") classNames="btn_primary" click=(action "sendVerificationCode") id="continueButton" disabled=continueDisabled}}{{/bp-button}}
+{{/bp-column-layout}}
