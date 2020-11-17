@@ -14,11 +14,12 @@ export default Controller.extend({
 		progressBar: false,
 		timeOut: "1500"
     }),
+    isSendCode: false,
     userEmail: computed( 'model.email', function() {
         return this.model.email
     }),
-    confirmDisabled: computed('userEmail', function() {
-		if(this.userEmail) {
+    confirmDisabled: computed('userEmail', 'isSendCode', function() {
+		if(this.userEmail && !this.isSendCode) {
 			return false
 		}
 		return true
@@ -37,6 +38,7 @@ export default Controller.extend({
                 //或者使用一个变量来判断并通过if else修改handlebars。
                 this.set('emailRight', false)
             } else {
+                this.set("isSendCode", true) 
                 const factory = PhSigV4AWSClientFactory
                 const config = {
                     accessKey: "10EC20D06323077893326D4388B18ED12D08F45BEB066308279D890FDFEB872F",
@@ -97,14 +99,17 @@ export default Controller.extend({
                             path: "/",
                             maxAge: 60
                         })
+                        this.set("isSendCode", false)
                         this.transitionToRoute(`/resetVerifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                     }).catch( err => {
                         this.toast.warning( "", "Please retry", this.toastOptions )
+                        this.set("isSendCode", false)
                     })
                     
                 }).catch( err => {
                     //进入注册流程
                     console.log('进入注册流程')
+                    this.set("isSendCode", false) 
                     this.toast.warning( "", "Email not registered", this.toastOptions )
                     // this.transitionToRoute(`/verifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                 })

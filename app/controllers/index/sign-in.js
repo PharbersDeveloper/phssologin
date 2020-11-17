@@ -16,10 +16,9 @@ export default Controller.extend({
 		timeOut: "1500"
     }),
     queryParams: ['redirect_uri','email'],
-    //还没有检测邮箱是否在系统中的逻辑，先拿此变量充当。
-    isInSystem: true,
-    signInDisabled: computed('password', function() {
-		if(this.password) {
+    isSignIn: false,
+    signInDisabled: computed('password', 'isSignIn', function() {
+		if(this.password && !this.isSignIn) {
 			return false
 		}
 		return true
@@ -47,6 +46,7 @@ export default Controller.extend({
 		* @description: 登录按钮：验证密码是否正确
 		*/
 		async signIn() {
+            this.set("isSignIn", true) 
             const ajax = this.get("ajax")
             const factory = PhSigV4AWSClientFactory
             const config = {
@@ -124,6 +124,7 @@ export default Controller.extend({
                     }
                     if (authorizationParams.state !== state) {
                         this.toast.warning( "", "Please retry", this.toastOptions )
+                        this.set("isSignIn", false) 
                         return
                     }
                     const callBackParm = [
@@ -132,14 +133,16 @@ export default Controller.extend({
                         `redirect_uri=${authorizationParams.redirect_uri}`,
                         `grant_type=authorization_code`,
                         `state=${authorizationParams.state}`].join("&")
+                    this.set("isSignIn", false) 
                     window.location = `${authorizationParams.redirect_uri}?${callBackParm}`
                 } catch {
                     this.toast.warning( "", "Please retry", this.toastOptions )
+                    this.set("isSignIn", false) 
                 }
             } catch (error) {
                 this.toast.error( "", "wrong password", this.toastOptions )
                 this.set('password', '')
-                console.log('error', error)
+                this.set("isSignIn", false) 
             }
         },
         Decrypt(word) {

@@ -32,9 +32,6 @@ export default Controller.extend({
     init() {
         this._super(...arguments);
 
-        window.onload = function() {
-            $('#resetCode0').focus()
-        }
         let timesout = setInterval(() => {
             this.set('codeTimeout', this.cookies.read('sendCodeDate'))
             if(!this.get('codeTimeout')) {
@@ -42,7 +39,14 @@ export default Controller.extend({
             }
         }, 500);
 
-        // this.timeOut()
+        window.addEventListener('keydown', event => {
+            if(!$('#resetCode0')[0].value) {
+                for(let i = 0; i < 6; i++) {
+                    this.set(`verifyCode${i}`, '')
+                }
+                $('#resetCode0').focus()
+            }
+        })
     },
     actions: {
         toForgotPage() {
@@ -124,6 +128,7 @@ export default Controller.extend({
         },
         resendCode() {
             this.set('codeTimeout', 1)
+            $('#resetCode0').focus()
             let userEmail = this.model.email
             const factory = PhSigV4AWSClientFactory
             const config = {

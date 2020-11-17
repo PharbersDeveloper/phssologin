@@ -17,8 +17,9 @@ export default Controller.extend({
     userEmail: '',
     //密码格式输入是否正确，即是否显示input底部提示
     emailRight: true,
-	continueDisabled: computed('userEmail', function() {
-		if(this.userEmail) {
+    isContinue: false,
+	continueDisabled: computed('userEmail', 'isContinue', function() {
+		if(this.userEmail &&!this.isContinue) {
 			return false
 		}
 		return true
@@ -46,6 +47,7 @@ export default Controller.extend({
                 this.set('emailRight', false)
                 console.log('email格式错误')
             } else {
+                this.set("isContinue", true) 
                 const factory = PhSigV4AWSClientFactory
                 const config = {
                     accessKey: "10EC20D06323077893326D4388B18ED12D08F45BEB066308279D890FDFEB872F",
@@ -88,10 +90,11 @@ export default Controller.extend({
                     headers: request.headers
                 } ).then( response => {
                     //进入登录流程
+                    this.set("isContinue", false) 
                     this.transitionToRoute(`/signIn?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                 }).catch( err => {
                     //进入注册流程
-                    console.log('进入注册流程')
+                    this.set("isContinue", false) 
                     this.toast.warning( "", "Email not registered", this.toastOptions )
                     // this.transitionToRoute(`/verifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                 })

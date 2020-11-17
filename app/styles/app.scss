@@ -2,7 +2,14 @@
     font-family: "ShareTechMono-Regular";
     src: url("/ShareTechMono-Regular.ttf"),
 }
-
+@font-face {
+    font-family: "SFProText-Light";
+    src: url("/SFProText-Light.ttf"),
+}
+@font-face {
+    font-family: "SFProText-Regular";
+    src: url("/SFProText-Regular.ttf"),
+}
 @mixin btn_secondary_initial {
     font-family: SFProText-Medium;
     font-size: 14px;
@@ -300,6 +307,9 @@
     }
     .mt-2 {
         margin-top: 8px;
+    }
+    .mr-1 {
+        margin-right: 4px;
     }
 	.btn_standard {
         background: rgb(37, 35, 45, 0.04) !important;
