@@ -10,6 +10,6 @@ export default Route.extend({
     model(params) {
         return hash( {
             redirect_uri: params.redirect_uri
-		} )
+        } )
     }
 });

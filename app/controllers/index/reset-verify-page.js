@@ -21,6 +21,14 @@ export default Controller.extend({
         return false
     }),
     verifyCode0:'',verifyCode1:'',verifyCode2:'',verifyCode3:'',verifyCode4:'',verifyCode5:'',
+    // timeOut() {
+    //     if(document.cookie.indexOf('sendCodeDate') !== -1) {
+    //         return this.timeOut()
+    //     } else {
+    //         this.set('codeTimeout', null)
+    //         return
+    //     }
+    // },
     init() {
         this._super(...arguments);
 
@@ -33,6 +41,8 @@ export default Controller.extend({
                 clearInterval(timesout)
             }
         }, 500);
+
+        // this.timeOut()
     },
     actions: {
         toForgotPage() {
@@ -166,8 +176,9 @@ export default Controller.extend({
                         clearInterval(timesout)
                     }
                 }, 500);
-                console.log('false')
+                this.toast.success( "", "Resend code successfully", this.toastOptions )
             }).catch( err => {
+                console.log('err',err)
                 this.toast.warning( "", "Please retry", this.toastOptions )
                 this.set('codeTimeout', undefined)
             })
