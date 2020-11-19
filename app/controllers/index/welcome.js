@@ -28,12 +28,14 @@ export default Controller.extend({
         this._super(...arguments);
 
         window.onload = function() {
-            $('.input_initial').focus()
+            $('#welcome-input').focus()
         }
+
         window.addEventListener('keydown', event => {
 			if(event.keyCode === 13) {
 				$('#continueButton').click()
-			}
+            }
+            $('#welcome-input').focus()
 			return
 		})
     },

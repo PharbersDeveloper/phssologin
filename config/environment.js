@@ -9,7 +9,7 @@ module.exports = function(environment) {
     redirectUri: "http://general.pharbers.com",
     pharbersUri: "http://www.pharbers.com",
     reportsUri: "http://reports.pharbers.com",
-		host: "http://oauth.pharbers.com",
+		host: "http://accounts.pharbers.com",
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -34,7 +34,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.redirectUri = "http://general.pharbers.com:4200"
-		ENV.host = "http://oauth.pharbers.com"
+		ENV.host = "http://accounts.pharbers.com"
 		ENV.namespace = "v0"
     ENV.pharbersUri = "http://www.pharbers.com:4300"
     ENV.reportsUri = "http://reports.pharbers.com:4400"
@@ -54,7 +54,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 		ENV.redirectUri = "http://general.pharbers.com"
-		ENV.host = "http://oauth.pharbers.com"
+		ENV.host = "http://accounts.pharbers.com"
 		ENV.namespace = "v0"
     ENV.pharbersUri = "http://www.pharbers.com"
     ENV.reportsUri = "http://reports.pharbers.com"

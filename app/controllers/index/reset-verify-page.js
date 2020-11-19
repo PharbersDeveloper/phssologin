@@ -40,7 +40,7 @@ export default Controller.extend({
         }, 500);
 
         window.addEventListener('keydown', event => {
-            if(!$('#resetCode0')[0].value) {
+            if($('#resetCode0')[0] && !$('#resetCode0')[0].value) {
                 for(let i = 0; i < 6; i++) {
                     this.set(`verifyCode${i}`, '')
                 }

@@ -24,6 +24,19 @@ export default Controller.extend({
 		}
 		return true
     }),
+    init() {
+        this._super(...arguments);
+        window.onload = function() {
+            $('#forgot-input').focus()
+        }
+        window.addEventListener('keydown', event => {
+			if(event.keyCode === 13) {
+				$('#forgotButton').click()
+            }
+            $('#forgot-input').focus()
+			return
+        })
+    },
     actions: {
         /**
         * @description: 检查用户输入的email格式；检查此邮箱是否在系统内。

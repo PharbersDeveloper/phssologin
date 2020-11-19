@@ -26,12 +26,13 @@ export default Controller.extend({
     init() {
         this._super(...arguments);
         window.onload = function() {
-            $('.input_initial').focus()
+            $('#signIn-input').focus()
         }
         window.addEventListener('keydown', event => {
 			if(event.keyCode === 13) {
 				$('#signInButton').click()
-			}
+            }
+            $('#signIn-input').focus()
 			return
         })
     },
