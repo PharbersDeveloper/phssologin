@@ -56,6 +56,16 @@ export default Controller.extend({
 		}
 		return true
 	}),
+	init() {
+        this._super(...arguments);
+
+        window.addEventListener('keydown', event => {
+			if(event.keyCode === 13) {
+				$('#resetPasswordButton').click()
+			}
+			return
+        })
+    },
     actions: {
         /**
 		* @description: 重置密码按钮：验证密码格式是否正确

@@ -7,9 +7,9 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     redirectUri: "http://general.pharbers.com",
-		pharbersUri: "http://www.pharbers.com",
-		host: "http://oauth.pharbers.com",
-		clientId: "5d75cb4cd0f98208eea94789",
+    pharbersUri: "http://www.pharbers.com",
+    reportsUri: "http://reports.pharbers.com",
+		host: "http://accounts.pharbers.com",
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -34,9 +34,10 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.redirectUri = "http://general.pharbers.com:4200"
-		ENV.host = "http://oauth.pharbers.com"
+		ENV.host = "http://accounts.pharbers.com"
 		ENV.namespace = "v0"
-		ENV.pharbersUri = "http://www.pharbers.com:4300"
+    ENV.pharbersUri = "http://www.pharbers.com:4300"
+    ENV.reportsUri = "http://reports.pharbers.com:4400"
   }
 
   if (environment === 'test') {
@@ -52,11 +53,11 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.clientId = "5d6f5aad209dd84fae51ff03"
 		ENV.redirectUri = "http://general.pharbers.com"
-		ENV.host = "http://oauth.pharbers.com"
+		ENV.host = "http://accounts.pharbers.com"
 		ENV.namespace = "v0"
-		ENV.pharbersUri = "http://www.pharbers.com"
+    ENV.pharbersUri = "http://www.pharbers.com"
+    ENV.reportsUri = "http://reports.pharbers.com"
     // here you can enable a production-specific feature
   }
 

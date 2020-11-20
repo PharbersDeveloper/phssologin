@@ -1,3 +1,15 @@
+@font-face {
+    font-family: "ShareTechMono-Regular";
+    src: url("/ShareTechMono-Regular.ttf"),
+}
+@font-face {
+    font-family: "SFProText-Light";
+    src: url("/SFProText-Light.ttf"),
+}
+@font-face {
+    font-family: "SFProText-Regular";
+    src: url("/SFProText-Regular.ttf"),
+}
 @mixin btn_secondary_initial {
     font-family: SFProText-Medium;
     font-size: 14px;
@@ -52,50 +64,14 @@
     height: 40px;
     background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M10 2c4.416 0 8 3.584 8 8s-3.584 8-8 8-8-3.584-8-8 3.584-8 8-8zm4.354 4.646a.5.5 0 0 0-.708 0L8.5 11.793 6.354 9.646l-.07-.057a.5.5 0 0 0-.638.765L8.5 13.207l5.854-5.853.057-.07a.5.5 0 0 0-.057-.638z' fill='%2323A959'/%3E%3Cpath d='M0-4h20v20H0z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/100% !important; 
 }
-.mb-integer-1 {
-    margin-bottom: 10px;
-}
 
-.mb-integer-2 {
-    margin-bottom: 20px;
-}
-
-.mb-integer-3 {
-    margin-bottom: 30px;
-}
-
-.mb-integer-4 {
-    margin-bottom: 40px;
-}
-.mb-integer-5 {
-    margin-bottom: 50px;
-}
 .mb-integer-6 {
     margin-bottom: 60px;
-}
-
-.mt-integer-1 {
-    margin-top: 10px;
 }
 
 .mt-integer-2 {
     margin-top: 20px;
 }
-
-.mt-integer-3 {
-    margin-top: 30px;
-}
-
-.mt-integer-4 {
-    margin-top: 40px;
-}
-.mt-integer-5 {
-    margin-top: 50px;
-}
-.mt-integer-6 {
-    margin-top: 60px;
-}
-
 
 .heading-medium {
     font-family: SFProText-Regular;
@@ -332,6 +308,9 @@
     .mt-2 {
         margin-top: 8px;
     }
+    .mr-1 {
+        margin-right: 4px;
+    }
 	.btn_standard {
         background: rgb(37, 35, 45, 0.04) !important;
         border-radius: 2px;
@@ -390,7 +369,7 @@
 			background: rgba(37, 35, 45, 0.04);
 		}
 
-		&:active {
+		&:focus {
 			border: 1px solid #7163C5;
 			background: #FFFFFF;
 		}
@@ -404,8 +383,8 @@
 		width: 322px;
 
 		.dataspell-text {
-			height: 23px;
-			font-family: ShareTechMono-Regular;
+			line-height: 20px;
+            font-family: ShareTechMono-Regular;
 			font-size: 20px;
 			color: #25232D;
 		}

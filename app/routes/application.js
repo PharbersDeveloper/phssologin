@@ -8,6 +8,6 @@ export default Route.extend( {
 		this._super( ...arguments )
 		//   this.intl.setLocale(['en-us']);
 		this.get( "intl" ).setLocale( ["zh-cn"],["en-us"] )
-		window.console.log( "1target route:" + targetName )
+		window.console.log( "target route:" + targetName )
 	}
 } )
