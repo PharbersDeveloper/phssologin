@@ -33,7 +33,7 @@ export default Controller.extend({
 			if(event.keyCode === 13) {
 				$('#forgotButton').click()
             }
-            $('#forgot-input').focus()
+            $('#forgot-input').focus() 
 			return
         })
     },

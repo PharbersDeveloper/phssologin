@@ -53,7 +53,7 @@
     "node": "8.* || >= 10.*"
   },
   "dependencies": {
-    "basic-components-v4": "*",
+    "ph-basic-components": "*",
     "crypto-js": "^4.0.0",
     "ember-cli-sass": "^10.0.1",
     "ember-intl": "^5.5.0",
