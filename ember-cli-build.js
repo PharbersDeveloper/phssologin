@@ -7,7 +7,7 @@ module.exports = function(defaults) {
     // Add options here
     sassOptions: {
 			includePaths: [
-				"node_modules/basic-components-v4"
+				"node_modules/ph-basic-components"
 			],
 			onlyIncluded: false
 		},
