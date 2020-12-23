@@ -32,29 +32,30 @@
 # fileName: File Name：
 # fileSize: File Size：
 login: 
-  name: "DataSpell"
-  welcome: "Welcome To DataSpell"
-  email: "Email"
-  verifyEmail: "Continue With Email"
-  changeEmail: "Change the Email"
-  checkEmail: "Check your Email for a code"
-  sendText1: "We’ve sent to "
-  sendText2: " a 6-digit code to your email. The code expires shortly, so please enter it soon."
-  verify: "Verify Code"
-  resend: "Resend code"
-  setAccount: "Set your account"
-  password: "Password"
-  username: "Username"
-  fullname: "Full Name"
-  forgotPassword: "Forgot Password"
-  signIn: "Sign In"
-  signInTo: "Sign in to DataSpell"
-  confirm: "Confirm"
-  resetPassword: Reset Password
-  newPassword: New Password
-  confirmPassword: Confirm New Password
-  success: Success
-  successText: You‘ve changed the password of your account
+  name: "法伯数据平台"
+  welcome: "欢迎使用数据中台"
+  email: "登陆邮箱"
+  verifyEmail: "使用此邮箱登陆"
+  changeEmail: "修改登录邮箱"
+  checkEmail: "检查电子邮件中的代码"
+  sendText1: "我们已经发送给"
+  sendText2: " 6位数字的电子邮件密码。代码即将到期，请尽快输入。"
+  verify: "验证码"
+  resend: "重新发送验证码"
+  setAccount: "设置你的账户"
+  password: "登录密码"
+  username: "用户名"
+  fullname: "全名"
+  forgotPassword: "忘记密码"
+  signIn: "登录"
+  signInTo: "登录法伯数据中台"
+  confirm: "确认"
+  resetPassword: "重置密码"
+  newPassword: "新密码"
+  confirmPassword: "确认新密码"
+  success: "成功"
+  successText: "您更改了您的帐户密码"
+  Error: "错误信息文本"
 account-center:
   currentPasswordErrorBox: "密码有误，请重新输入"
   confirmPasswordEmpty: "确认密码不能为空，请重新输入密码"

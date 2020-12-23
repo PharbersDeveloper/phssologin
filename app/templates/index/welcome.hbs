@@ -5,7 +5,7 @@
     {{#if (bp-eq emailRight false)}}
         {{#bp-row-layout classNames="mt-1"}}
             {{bp-icon iconName='' color='' classNames="icon_error"}}
-            {{#bp-text classNames="tertiary-Destructive"}}Error messages text goes here{{/bp-text}}
+            {{#bp-text classNames="tertiary-Destructive"}}{{t "login.Error"}}{{/bp-text}}
         {{/bp-row-layout}}
     {{/if}}
     {{!-- 按下按键首先判断email格式，正确之后需要判断此邮箱是否在系统内 --}}

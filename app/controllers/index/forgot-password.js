@@ -8,6 +8,7 @@ export default Controller.extend({
     ajax: service(),
     toast: service(),
     cookies: service(),
+    language:'',
     toastOptions: EmberObject.create({
 		closeButton: false,
 		positionClass: "toast-top-center",
@@ -26,6 +27,15 @@ export default Controller.extend({
     }),
     init() {
         this._super(...arguments);
+        var type = navigator.appName;
+        　　if (type == "Netscape"){
+            　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+        　　}else{
+            　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
+        　　};
+		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
+	        this.set("language", newLang);
+
         window.onload = function() {
             $('#forgot-input').focus()
         }
@@ -115,15 +125,24 @@ export default Controller.extend({
                         this.set("isSendCode", false)
                         this.transitionToRoute(`/resetVerifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                     }).catch( err => {
-                        this.toast.warning( "", "Please retry", this.toastOptions )
+                        if(this.language=="zh"){
+                            this.toast.warning( "", "请重新输入", this.toastOptions )
+                        }else{
+                            this.toast.warning( "", "Please retry", this.toastOptions )
+                        }  
                         this.set("isSendCode", false)
                     })
                     
                 }).catch( err => {
                     //进入注册流程
                     console.log('进入注册流程')
-                    this.set("isSendCode", false) 
-                    this.toast.warning( "", "Email not registered", this.toastOptions )
+                    this.set("isSendCode", false)
+                    if(this.language=="zh"){
+                        this.toast.warning( "", "邮箱未注册", this.toastOptions )
+                    }else{
+                        this.toast.warning( "", "Email not registered", this.toastOptions )
+                    }  
+                   
                     // this.transitionToRoute(`/verifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                 })
                 this.set('emailRight', true)
