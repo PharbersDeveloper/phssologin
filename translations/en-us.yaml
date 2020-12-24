@@ -41,6 +41,7 @@ login:
   confirmPassword: Confirm New Password
   success: Success
   successText: You‘ve changed the password of your account
+  Error: Error messages text goes here
 account-center:
   currentPasswordErrorBox: "The password is wrong, please re-enter"
   confirmPasswordEmpty: "The confirmation password cannot be empty, please re-enter the password"

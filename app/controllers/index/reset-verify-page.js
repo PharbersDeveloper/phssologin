@@ -8,6 +8,7 @@ export default Controller.extend({
     ajax: service(),
     toast: service(),
     cookies: service(),
+    language:'',
     toastOptions: EmberObject.create({
 		closeButton: false,
 		positionClass: "toast-top-center",
@@ -31,7 +32,14 @@ export default Controller.extend({
     // },
     init() {
         this._super(...arguments);
-
+        var type = navigator.appName;
+        　　if (type == "Netscape"){
+            　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+        　　}else{
+            　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
+        　　};
+		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
+	        this.set("language", newLang);
         let timesout = setInterval(() => {
             this.set('codeTimeout', this.cookies.read('sendCodeDate'))
             if(!this.get('codeTimeout')) {
@@ -112,7 +120,12 @@ export default Controller.extend({
                         this.transitionToRoute(`/resetPasswordPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                     }).catch( err => {
                         //验证码输入错误，6位数字清空，显示错误提示
-                        this.toast.error( "", "incorrect verification code", this.toastOptions )
+                        if(this.language=="zh"){
+                            this.toast.error( "", "验证码错误", this.toastOptions )
+                        }else{
+                            this.toast.error( "", "incorrect verification code", this.toastOptions )
+                        }  
+                       
                         for(let i = 0; i < 6; i++) {
                             this.set(`verifyCode${i}`, '')
                         }
@@ -181,10 +194,20 @@ export default Controller.extend({
                         clearInterval(timesout)
                     }
                 }, 500);
-                this.toast.success( "", "Resend code successfully", this.toastOptions )
+                if(this.language=="zh"){
+                    this.toast.success( "", "密码重置成功", this.toastOptions )
+                }else{
+                    this.toast.success( "", "Resend code successfully", this.toastOptions )
+                }  
+                
             }).catch( err => {
                 console.log('err',err)
-                this.toast.warning( "", "Please retry", this.toastOptions )
+                if(this.language=="zh"){
+                    this.toast.warning( "", "请重试", this.toastOptions )
+                }else{
+                    this.toast.warning( "", "Please retry", this.toastOptions )
+                }  
+              
                 this.set('codeTimeout', undefined)
             })
         },

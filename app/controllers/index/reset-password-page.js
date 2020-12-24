@@ -12,6 +12,7 @@ export default Controller.extend({
 	ajax: service(),
 	newPassword: '',
 	confirmPassword: '',
+	language:'',
     toastOptions: EmberObject.create({
 		closeButton: false,
 		positionClass: "toast-top-center",
@@ -59,6 +60,14 @@ export default Controller.extend({
 	init() {
         this._super(...arguments);
 
+		var type = navigator.appName;
+        　　if (type == "Netscape"){
+            　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+        　　}else{
+            　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
+        　　};
+		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
+	        this.set("language", newLang);
         window.addEventListener('keydown', event => {
 			if(event.keyCode === 13) {
 				$('#resetPasswordButton').click()
@@ -123,11 +132,21 @@ export default Controller.extend({
 				} ).then(value => {
 					this.transitionToRoute(`/resetSuccessPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
 				}).catch(err => {
-					this.toast.warning( "", "Please retry", this.toastOptions )
+					if(this.language=="zh"){
+                        this.toast.warning( "", "请重新输入", this.toastOptions )
+                    }else{
+                        this.toast.warning( "", "Please retry", this.toastOptions )
+                    }  
+					
 				})
 			} else {
 				//提示填写的格式错误
-                this.toast.error( "", "The two passwords are inconsistent", this.toastOptions )
+				if(this.language=="zh"){
+					this.toast.error( "", "两个密码不一致", this.toastOptions )
+				}else{
+					this.toast.error( "", "The two passwords are inconsistent", this.toastOptions )
+				}  
+               
 			}
 		},
 		Decrypt(word) {

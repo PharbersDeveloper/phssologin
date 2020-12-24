@@ -7,6 +7,7 @@ const CryptoJS = require("crypto-js");
 
 export default Controller.extend({
     password: '',
+    language:'',
     toast: service(),
     ajax: service(),
     toastOptions: EmberObject.create({
@@ -25,6 +26,16 @@ export default Controller.extend({
     }),
     init() {
         this._super(...arguments);
+        　var type = navigator.appName;
+        　　if (type == "Netscape"){
+            　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+        　　}else{
+            　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
+        　　};
+		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
+	        this.set("language", newLang);
+        　　
+
         window.onload = function() {
             $('#signIn-input').focus()
         }
@@ -124,7 +135,11 @@ export default Controller.extend({
                         authorizationParams[obj[0]] = obj[1]
                     }
                     if (authorizationParams.state !== state) {
-                        this.toast.warning( "", "Please retry", this.toastOptions )
+                        if(this.language=="zh"){
+                            this.toast.warning( "", "请重新输入", this.toastOptions )
+                        }else{
+                            this.toast.warning( "", "Please retry", this.toastOptions )
+                        }  
                         this.set("isSignIn", false) 
                         return
                     }
@@ -137,11 +152,19 @@ export default Controller.extend({
                     this.set("isSignIn", false) 
                     window.location = `${authorizationParams.redirect_uri}?${callBackParm}`
                 } catch {
-                    this.toast.warning( "", "Please retry", this.toastOptions )
-                    this.set("isSignIn", false) 
+                    if(this.language=="zh"){
+                        this.toast.warning( "", "请重新输入", this.toastOptions )
+                    }else{
+                        this.toast.warning( "", "Please retry", this.toastOptions )
+                    }           
+                     this.set("isSignIn", false) 
                 }
             } catch (error) {
-                this.toast.error( "", "wrong password", this.toastOptions )
+                if(this.language=="zh"){
+                    this.toast.error( "", "密码错误", this.toastOptions )
+                }else{
+                    this.toast.error( "", "wrong password", this.toastOptions )
+                }              
                 this.set('password', '')
                 this.set("isSignIn", false) 
             }
