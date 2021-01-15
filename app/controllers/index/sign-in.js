@@ -106,8 +106,9 @@ export default Controller.extend({
 				})
 
 				//获取code的值,并跳转到redircet_uri+queryParams
-				const client_id = this.model.client_id || this.actions.Decrypt("AB07EE4BF5CE23954C217D69F0E7784A3C5C5FACCEBD4995E44DE28B8692CDA3")
+				const client_id = !this.model.client_id ? this.model.client_id : this.actions.Decrypt("AB07EE4BF5CE23954C217D69F0E7784A3C5C5FACCEBD4995E44DE28B8692CDA3")
 				const client_secret = this.actions.Decrypt("621C5702E82D67783AE1D88DFA26FF5FFB357C8E219B29526EE50C578D8EAB8395DF6BF83BF5F121A8E686B2246A9937815CFD936CCBAA138713E5579FAF6A3D9A487BCF6C663212441502F32A90D686")
+				const state = !this.model.state ? this.model.state : "xyz"
 				let reqCode = {
 					verb: "GET",
 					path: "/v0/oauth/authorization",
@@ -116,7 +117,7 @@ export default Controller.extend({
 						response_type: "code",
 						user_id: loginSuccess.uid,
 						redirect_uri: `${this.model.redirect_uri}`,
-						state: this.model.state
+						state
 					},
 					body: {}
 				}
@@ -149,6 +150,7 @@ export default Controller.extend({
 						`grant_type=authorization_code`,
 						`state=${authorizationParams.state}`].join("&")
 					this.set("isSignIn", false)
+					console.log(`${authorizationParams.redirect_uri}?${callBackParm}`)
 					window.location = `${authorizationParams.redirect_uri}?${callBackParm}`
 				} catch {
 					if (this.language == "zh") {
@@ -178,13 +180,6 @@ export default Controller.extend({
 			);
 			let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
 			return decryptedStr.toString();
-		},
-		Encrypt(word) {
-			let srcs = CryptoJS.enc.Utf8.parse(word);
-			let encrypted = CryptoJS.AES.encrypt(srcs,
-				CryptoJS.enc.Utf8.parse("1234123412ABCDEF"),
-				{ iv: CryptoJS.enc.Utf8.parse('ABCDEF1234123412'), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
-			return encrypted.ciphertext.toString().toUpperCase();
 		}
 	}
 });

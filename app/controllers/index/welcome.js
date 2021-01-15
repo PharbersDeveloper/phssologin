@@ -101,7 +101,7 @@ export default Controller.extend({
                 } ).then( response => {
                     //进入登录流程
                     this.set("isContinue", false) 
-                    this.transitionToRoute(`/signIn?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
+                    this.transitionToRoute(`/signIn?email=${userEmail}&redirect_uri=${this.model.redirect_uri}&state=${this.model.state}&client_id=${this.model.client_id}&scope=${this.model.scope}`)
                 }).catch( err => {
                     //进入注册流程
                     this.set("isContinue", false) 
