@@ -106,17 +106,16 @@ export default Controller.extend({
 				})
 
 				//获取code的值,并跳转到redircet_uri+queryParams
-				const client_id = !this.model.client_id ? this.model.client_id : this.actions.Decrypt("AB07EE4BF5CE23954C217D69F0E7784A3C5C5FACCEBD4995E44DE28B8692CDA3")
-				const client_secret = this.actions.Decrypt("621C5702E82D67783AE1D88DFA26FF5FFB357C8E219B29526EE50C578D8EAB8395DF6BF83BF5F121A8E686B2246A9937815CFD936CCBAA138713E5579FAF6A3D9A487BCF6C663212441502F32A90D686")
-				const state = !this.model.state ? this.model.state : "xyz"
+				const client_id = this.model.client_id ? this.model.client_id : this.actions.Decrypt("AB07EE4BF5CE23954C217D69F0E7784A3C5C5FACCEBD4995E44DE28B8692CDA3")
+				const state = this.model.state ? this.model.state : "xyz"
 				let reqCode = {
 					verb: "GET",
-					path: "/v0/oauth/authorization",
+					path: "/v0/oauth_beta/authorization",
 					queryParams: {
-						client_id: client_id,
-						response_type: "code",
 						user_id: loginSuccess.uid,
-						redirect_uri: `${this.model.redirect_uri}`,
+						client_id,
+						response_type: "code",
+						redirect_uri: `${unescape(this.model.redirect_uri)}`,
 						state
 					},
 					body: {}
@@ -124,13 +123,12 @@ export default Controller.extend({
 				//AWS_IAM方式
 				const requestCode = client.makeRequest(reqCode)
 				try {
-					const result = await ajax.request(requestCode.url, {
+					const result = await ajax.request(unescape(requestCode.url), {
 						headers: requestCode.headers
 					})
 
 					const authorizationParams = {}
-
-					for (const item of result.split('&')) {
+					for (const item of result.redirectUri.split('&')) {
 						const obj = item.split('=')
 						authorizationParams[obj[0]] = obj[1]
 					}
@@ -143,15 +141,7 @@ export default Controller.extend({
 						this.set("isSignIn", false)
 						return
 					}
-					const callBackParm = [
-						`client_id=${client_id}`,
-						`code=${authorizationParams.code}`,
-						`redirect_uri=${authorizationParams.redirect_uri}`,
-						`grant_type=authorization_code`,
-						`state=${authorizationParams.state}`].join("&")
-					this.set("isSignIn", false)
-					console.log(`${authorizationParams.redirect_uri}?${callBackParm}`)
-					window.location = `${authorizationParams.redirect_uri}?${callBackParm}`
+					window.location = `${result.redirectUri}`
 				} catch {
 					if (this.language == "zh") {
 						this.toast.warning("", "请重新输入", this.toastOptions)
