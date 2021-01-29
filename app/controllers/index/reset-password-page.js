@@ -2,8 +2,6 @@ import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import EmberObject from "@ember/object";
 import { computed } from '@ember/object';
-import PhSigV4AWSClientFactory from "../../lib/PhSigV4AWSClientFactory"
-const CryptoJS = require("crypto-js");
 
 export default Controller.extend({
     newPassword: '',
@@ -80,48 +78,21 @@ export default Controller.extend({
 		* @description: 重置密码按钮：验证密码格式是否正确
 		*/
 		resetButton() {
-			
+			const CryptoJS = require("crypto-js");
 			if(this.newPassword === this.confirmPassword) {
 				let submitPassword = CryptoJS.SHA256(this.confirmPassword).toString()
-				const factory = PhSigV4AWSClientFactory
 				let userEmail = this.model.email
-				const config = {
-					accessKey: "10EC20D06323077893326D4388B18ED12D08F45BEB066308279D890FDFEB872F",
-                    secretKey: "7A2A70C890EB8D3BFDE11F0C2FEBCB856A9151002A9D21AF3D5525B04F81C3F65340A646C74E5BFF6E672FC4740D96B0",
-					sessionToken: '',
-					region: 'cn-northwest-1',
-					sessionToken: "",
-					region: "cn-northwest-1",
-					apiKey: undefined,
-					defaultContentType: "application/json",
-					defaultAcceptType: "application/json"
-				}
-				const invokeUrl = "https://2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn/v0"
-				const endpoint = /(^https?:\/\/[^\/]+)/g.exec( invokeUrl )[1]
-				const sigV4ClientConfig = {
-					accessKey: this.actions.Decrypt(config.accessKey),
-                    secretKey: this.actions.Decrypt(config.secretKey),
-					sessionToken: config.sessionToken,
-					serviceName: "execute-api",
-					region: config.region,
-					endpoint: endpoint,
-					defaultContentType: config.defaultContentType,
-					defaultAcceptType: config.defaultAcceptType
-				}
-				const client = factory.PhSigV4AWSClientFactory.newClient( sigV4ClientConfig )
-				let req = {
-					verb: "POST",
-					path: "/v0/phact/forgotPassword",
-					body: {
-						"email": userEmail,
-						"password": submitPassword
-					}
-				}
-
-				const request = client.makeRequest( req )
-
+				const applicationAdapter = this.store.adapterFor('application')
 				const ajax = this.get("ajax")
-
+				
+				applicationAdapter.set('path', "/v0/phact/forgotPassword")
+				applicationAdapter.set('verb', "POST")
+                applicationAdapter.set('body', {
+                    "email": userEmail,
+					"password": submitPassword
+                })
+                applicationAdapter.toggleProperty('oauthRequest')
+                const request = applicationAdapter.get('request')
 				ajax.request(  request.url , {
 					method: "POST",
 					headers: request.headers,
@@ -146,19 +117,7 @@ export default Controller.extend({
 				}else{
 					this.toast.error( "", "The two passwords are inconsistent", this.toastOptions )
 				}  
-               
 			}
-		},
-		Decrypt(word) {
-            const CryptoJS = require("crypto-js");
-            let encryptedHexStr = CryptoJS.enc.Hex.parse(word);
-            let srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-            let decrypt = CryptoJS.AES.decrypt(srcs,
-                CryptoJS.enc.Utf8.parse("1234123412ABCDEF"),
-                { iv: CryptoJS.enc.Utf8.parse('ABCDEF1234123412'), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
-            );
-            let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
-            return decryptedStr.toString();
-        }
+		}
     }
 });
