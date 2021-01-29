@@ -9,7 +9,8 @@ module.exports = function(environment) {
     redirectUri: "http://general.pharbers.com",
     pharbersUri: "http://www.pharbers.com",
     reportsUri: "http://reports.pharbers.com",
-		host: "http://accounts.pharbers.com",
+    host: "http://accounts.pharbers.com",
+    invokeUrl: "https://2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn",
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -37,7 +38,8 @@ module.exports = function(environment) {
 		ENV.host = "http://accounts.pharbers.com"
 		ENV.namespace = "v0"
     ENV.pharbersUri = "http://www.pharbers.com:4300"
-    ENV.reportsUri = "http://reports.pharbers.com:4400"
+    ENV.reportsUri = "http://reports.pharbers.com:4400",
+    ENV.invokeUrl = "https://2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn"
   }
 
   if (environment === 'test') {
@@ -58,6 +60,7 @@ module.exports = function(environment) {
 		ENV.namespace = "v0"
     ENV.pharbersUri = "http://www.pharbers.com"
     ENV.reportsUri = "http://reports.pharbers.com"
+    ENV.invokeUrl = "https://2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn"
     // here you can enable a production-specific feature
   }
 

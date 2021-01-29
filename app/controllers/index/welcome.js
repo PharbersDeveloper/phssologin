@@ -1,12 +1,12 @@
 import Controller from '@ember/controller';
 import { computed  } from '@ember/object';
-import PhSigV4AWSClientFactory from "../../lib/PhSigV4AWSClientFactory"
 import { inject as service } from "@ember/service"
 import EmberObject from "@ember/object";
 
 export default Controller.extend({
     ajax: service(),
     toast: service(),
+    store: service(),
     language:'',
     toastOptions: EmberObject.create({
 		closeButton: false,
@@ -45,10 +45,12 @@ export default Controller.extend({
             }
             $('#welcome-input').focus()
 			return
-		})
+        })
     },
     actions: {
         sendVerificationCode() {
+            const applicationAdapter = this.store.adapterFor('application')
+            const ajax = this.get("ajax")
             let emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
             let userEmail = this.userEmail
             if(!emailReg.test(userEmail)) {
@@ -58,44 +60,14 @@ export default Controller.extend({
                 console.log('email格式错误')
             } else {
                 this.set("isContinue", true) 
-                const factory = PhSigV4AWSClientFactory
-                const config = {
-                    accessKey: "10EC20D06323077893326D4388B18ED12D08F45BEB066308279D890FDFEB872F",
-                    secretKey: "7A2A70C890EB8D3BFDE11F0C2FEBCB856A9151002A9D21AF3D5525B04F81C3F65340A646C74E5BFF6E672FC4740D96B0",
-                    sessionToken: '',
-                    region: 'cn-northwest-1',
-                    sessionToken: "",
-                    region: "cn-northwest-1",
-                    apiKey: undefined,
-                    defaultContentType: "application/json",
-                    defaultAcceptType: "application/json"
-                }
-                const invokeUrl = "https://2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn/v0"
-                const endpoint = /(^https?:\/\/[^\/]+)/g.exec( invokeUrl )[1]
-                const sigV4ClientConfig = {
-                    accessKey: this.actions.Decrypt(config.accessKey),
-                    secretKey: this.actions.Decrypt(config.secretKey),
-                    sessionToken: config.sessionToken,
-                    serviceName: "execute-api",
-                    region: config.region,
-                    endpoint: endpoint,
-                    defaultContentType: config.defaultContentType,
-                    defaultAcceptType: config.defaultAcceptType
-                }
-                const client = factory.PhSigV4AWSClientFactory.newClient( sigV4ClientConfig )
-                let req = {
-                    verb: "GET",
-                    path: "/v0/phact/verifyEmail",
-                    queryParams: {
-                        email: userEmail
-                    },
-                    body: {}
-                }
-    
-                const request = client.makeRequest( req )
-    
-                const ajax = this.get("ajax")
 
+                applicationAdapter.set('path', "/v0/phact/verifyEmail")
+				applicationAdapter.set('verb', "GET")
+                applicationAdapter.set('queryParams', {
+                    email: userEmail
+                })
+                applicationAdapter.toggleProperty('oauthRequest')
+                const request = applicationAdapter.get('request')
                 ajax.request(  request.url , {
                     headers: request.headers
                 } ).then( response => {
