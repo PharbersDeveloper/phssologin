@@ -36,7 +36,6 @@ export default DS.JSONAPIAdapter.extend({
         }
 
         const request = client.makeRequest( req )
-        console.log('request',request)
         return request
     }),
     Decrypt(word) {
