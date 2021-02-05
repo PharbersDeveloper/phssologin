@@ -65,7 +65,7 @@ export default Controller.extend({
 			applicationAdapter.set('path', "/v0/oauth/login")
 			applicationAdapter.set('verb', "GET")
 			applicationAdapter.set('queryParams', {
-				email: this.model.email,
+				account: this.model.email,
 				password: password
 			})
 			applicationAdapter.toggleProperty('oauthRequest')
@@ -80,7 +80,7 @@ export default Controller.extend({
 				const client_id = this.model.client_id ? this.model.client_id : this.actions.Decrypt("AB07EE4BF5CE23954C217D69F0E7784A3C5C5FACCEBD4995E44DE28B8692CDA3")
 				const state = this.model.state ? this.model.state : "xyz"
 				//AWS_IAM方式
-				applicationAdapter.set('path', "/v0/oauth_beta/authorization")
+				applicationAdapter.set('path', "/v0/oauth/authorization")
 				applicationAdapter.set('verb', "GET")
 				applicationAdapter.set('queryParams', {
 					user_id: loginSuccess.uid,
