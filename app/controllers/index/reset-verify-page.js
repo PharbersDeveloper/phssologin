@@ -72,7 +72,7 @@ export default Controller.extend({
                     const applicationAdapter = this.store.adapterFor('application')
                     const ajax = this.get("ajax")
 
-                    applicationAdapter.set('path', "/v0/phact/verifyCode")
+                    applicationAdapter.set('path', "/phact/verifyCode")
                     applicationAdapter.set('verb', "GET")
                     applicationAdapter.set('queryParams', {
                         key: userEmail,
@@ -117,7 +117,7 @@ export default Controller.extend({
             const applicationAdapter = this.store.adapterFor('application')
             const ajax = this.get("ajax")
 
-            applicationAdapter.set('path', "/v0/phact/sendCode")
+            applicationAdapter.set('path', "/phact/sendCode")
             applicationAdapter.set('verb', "GET")
             applicationAdapter.set('queryParams', {
                 to: userEmail

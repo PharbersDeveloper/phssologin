@@ -85,7 +85,7 @@ export default Controller.extend({
 				const applicationAdapter = this.store.adapterFor('application')
 				const ajax = this.get("ajax")
 				
-				applicationAdapter.set('path', "/v0/phact/forgotPassword")
+				applicationAdapter.set('path', "/phact/forgotPassword")
 				applicationAdapter.set('verb', "POST")
                 applicationAdapter.set('body', {
                     "email": userEmail,
