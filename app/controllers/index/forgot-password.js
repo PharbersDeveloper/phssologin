@@ -64,7 +64,7 @@ export default Controller.extend({
                 const applicationAdapter = this.store.adapterFor('application')
                 const ajax = this.get("ajax")
 
-                applicationAdapter.set('path', "/v0/phact/verifyEmail")
+                applicationAdapter.set('path', "/phact/verifyEmail")
                 applicationAdapter.set('verb', "GET")
                 applicationAdapter.set('queryParams', {
                     email: userEmail
@@ -74,7 +74,7 @@ export default Controller.extend({
                 ajax.request(  request.url , {
                     headers: request.headers
                 } ).then( value => {
-                    applicationAdapter.set('path', "/v0/phact/sendCode")
+                    applicationAdapter.set('path', "/phact/sendCode")
                     applicationAdapter.set('verb', "GET")
                     applicationAdapter.set('queryParams', {
                         to: userEmail
