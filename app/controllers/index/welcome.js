@@ -28,13 +28,13 @@ export default Controller.extend({
     init() {
         this._super(...arguments);
         var type = navigator.appName;
-        　　if (type == "Netscape"){
-            　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
-        　　}else{
-            　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
-        　　};
-		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
-	        this.set("language", newLang);
+	　　if (type == "Netscape"){
+		　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+	　　}else{
+		　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
+	　　}
+	　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
+		this.set("language", newLang);
         window.onload = function() {
             $('#welcome-input').focus()
         }
@@ -59,7 +59,7 @@ export default Controller.extend({
                 this.set('emailRight', false)
                 console.log('email格式错误')
             } else {
-                this.set("isContinue", true) 
+                this.set("isContinue", true)
 
                 applicationAdapter.set('path', "/phact/verifyEmail")
 				applicationAdapter.set('verb', "GET")
@@ -72,16 +72,16 @@ export default Controller.extend({
                     headers: request.headers
                 } ).then( response => {
                     //进入登录流程
-                    this.set("isContinue", false) 
+                    this.set("isContinue", false)
                     this.transitionToRoute(`/signIn?email=${userEmail}&redirect_uri=${this.model.redirect_uri}&state=${this.model.state}&client_id=${this.model.client_id}&scope=${this.model.scope}`)
                 }).catch( err => {
                     //进入注册流程
-                    this.set("isContinue", false) 
+                    this.set("isContinue", false)
                     if(this.language=="zh"){
                         this.toast.warning( "", "邮箱未注册", this.toastOptions )
                     }else{
                         this.toast.warning( "", "Email not registered", this.toastOptions )
-                    }  
+                    }
                     // this.transitionToRoute(`/verifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                 })
                 this.set('emailRight', true)
@@ -99,5 +99,5 @@ export default Controller.extend({
             return decryptedStr.toString();
         }
     }
-    
+
 });
