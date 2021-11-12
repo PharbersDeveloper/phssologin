@@ -27,13 +27,13 @@ export default Controller.extend({
     init() {
         this._super(...arguments);
         var type = navigator.appName;
-        　　if (type == "Netscape"){
-            　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
-        　　}else{
-            　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
-        　　};
-		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
-	        this.set("language", newLang);
+	　　if (type == "Netscape"){
+		　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
+	　　}else{
+		　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
+	　　}
+	　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
+		this.set("language", newLang);
 
         window.onload = function() {
             $('#forgot-input').focus()
@@ -42,7 +42,7 @@ export default Controller.extend({
 			if(event.keyCode === 13) {
 				$('#forgotButton').click()
             }
-            $('#forgot-input').focus() 
+            $('#forgot-input').focus()
 			return
         })
     },
@@ -60,7 +60,7 @@ export default Controller.extend({
                 //或者使用一个变量来判断并通过if else修改handlebars。
                 this.set('emailRight', false)
             } else {
-                this.set("isSendCode", true) 
+                this.set("isSendCode", true)
                 const applicationAdapter = this.store.adapterFor('application')
                 const ajax = this.get("ajax")
 
@@ -74,15 +74,23 @@ export default Controller.extend({
                 ajax.request(  request.url , {
                     headers: request.headers
                 } ).then( value => {
-                    applicationAdapter.set('path', "/phact/sendCode")
-                    applicationAdapter.set('verb', "GET")
-                    applicationAdapter.set('queryParams', {
-                        to: userEmail
-                    })
+                	// Send Email
+                    applicationAdapter.set('path', "/phemailrepwd")
+                    applicationAdapter.set('verb', "POST")
+					applicationAdapter.set('body', {
+						content_type: "forget_password",
+						target_address: [userEmail],
+						subject: "Pharbers Platform: Reset Possword",
+						attachments: []
+					})
+                    applicationAdapter.set('queryParams', {})
                     applicationAdapter.toggleProperty('oauthRequest')
                     const sendCodeRequest = applicationAdapter.get('request')
-                    ajax.request(  sendCodeRequest.url , {
-                        headers: sendCodeRequest.headers
+
+					ajax.request(  sendCodeRequest.url , {
+                        headers: sendCodeRequest.headers,
+						type: "POST",
+						data:  JSON.stringify(applicationAdapter.get('body'))
                     } ).then(value => {
                         //进入重置密码流程
                         this.cookies.write('sendCodeDate', (new Date()).getTime(),{
@@ -97,10 +105,10 @@ export default Controller.extend({
                             this.toast.warning( "", "请重新输入", this.toastOptions )
                         }else{
                             this.toast.warning( "", "Please retry", this.toastOptions )
-                        }  
+                        }
                         this.set("isSendCode", false)
                     })
-                    
+
                 }).catch( err => {
                     //进入注册流程
                     console.log('进入注册流程')
@@ -109,7 +117,7 @@ export default Controller.extend({
                         this.toast.warning( "", "邮箱未注册", this.toastOptions )
                     }else{
                         this.toast.warning( "", "Email not registered", this.toastOptions )
-                    }  
+                    }
                     // this.transitionToRoute(`/verifyPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
                 })
                 this.set('emailRight', true)

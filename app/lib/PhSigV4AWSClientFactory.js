@@ -190,19 +190,20 @@ PhSigV4AWSClientFactory.newClient = function (config) {
         }
 
         let datetime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
-        
+
         headers[X_AMZ_DATE] = datetime;
         // const parser = document.createElement('a');
         // parser.href = awsSigV4Client.endpoint;
-        headers[HOST] = "2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn"
+        // headers[HOST] = "2t69b7x032.execute-api.cn-northwest-1.amazonaws.com.cn"
+		headers[HOST] = "apiv2.pharbers.com"
 
-        const canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
+		const canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
         const hashedCanonicalRequest = hashCanonicalRequest(canonicalRequest);
         const credentialScope = buildCredentialScope(datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
         const stringToSign = buildStringToSign(datetime, credentialScope, hashedCanonicalRequest);
         const signingKey = calculateSigningKey(awsSigV4Client.secretKey, datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
         const signature = calculateSignature(signingKey, stringToSign);
-        
+
         headers[AUTHORIZATION] = buildAuthorizationHeader(awsSigV4Client.accessKey, credentialScope, headers, signature);
         if(awsSigV4Client.sessionToken !== undefined && awsSigV4Client.sessionToken !== '') {
             headers[X_AMZ_SECURITY_TOKEN] = awsSigV4Client.sessionToken;
