@@ -36,7 +36,7 @@ export default Controller.extend({
             　　var lang = navigator.language;//获取浏览器配置语言，支持非IE浏览器
         　　}else{
             　　var lang = navigator.userLanguage;//获取浏览器配置语言，支持IE5+ == navigator.systemLanguage
-        　　};
+        　　}
 		　　var newLang = lang.substr(0, 2);//获取浏览器配置语言前两位
 	        this.set("language", newLang);
         let timesout = setInterval(() => {
@@ -72,16 +72,25 @@ export default Controller.extend({
                     const applicationAdapter = this.store.adapterFor('application')
                     const ajax = this.get("ajax")
 
-                    applicationAdapter.set('path', "/phact/verifyCode")
-                    applicationAdapter.set('verb', "GET")
-                    applicationAdapter.set('queryParams', {
-                        key: userEmail,
-                        code: `${this.verifyCode0}${this.verifyCode1}${this.verifyCode2}${this.verifyCode3}${this.verifyCode4}${this.verifyCode5}`
+                    // applicationAdapter.set('path', "/phact/verifyCode")
+                    // applicationAdapter.set('verb', "GET")
+                    // applicationAdapter.set('queryParams', {
+                    //     key: userEmail,
+                    //     code: `${this.verifyCode0}${this.verifyCode1}${this.verifyCode2}${this.verifyCode3}${this.verifyCode4}${this.verifyCode5}`
+                    // })
+                    applicationAdapter.set('path', "/phusercodecheck")
+                    applicationAdapter.set('verb', "POST")
+                    applicationAdapter.set('queryParams', {})
+                    applicationAdapter.set('body', {
+                        "email": userEmail,
+                        "code": `${this.verifyCode0}${this.verifyCode1}${this.verifyCode2}${this.verifyCode3}${this.verifyCode4}${this.verifyCode5}`
                     })
                     applicationAdapter.toggleProperty('oauthRequest')
                     const request = applicationAdapter.get('request')
                     ajax.request(  request.url , {
-                        headers: request.headers
+                        headers: request.headers,
+                        type: "POST",
+                        data:  JSON.stringify(applicationAdapter.get('body'))
                     } ).then( response => {
                         // 进入重置密码界面
                         console.log('进入重置密码界面')
@@ -95,15 +104,15 @@ export default Controller.extend({
                             this.toast.error( "", "验证码错误", this.toastOptions )
                         }else{
                             this.toast.error( "", "incorrect verification code", this.toastOptions )
-                        }  
-                       
+                        }
+
                         for(let i = 0; i < 6; i++) {
                             this.set(`verifyCode${i}`, '')
                         }
                         $('#resetCode0').focus()
                     })
                 }
-            }  
+            }
             //按下删除键
             if( index !== 0 && event.keyCode === 8 && $(`#resetCode${index}`)[0].value === '') {
                 $(`#resetCode${index-1}`)[0].value = ''
@@ -142,16 +151,16 @@ export default Controller.extend({
                     this.toast.success( "", "密码重置成功", this.toastOptions )
                 }else{
                     this.toast.success( "", "Resend code successfully", this.toastOptions )
-                }  
-                
+                }
+
             }).catch( err => {
                 console.log('err',err)
                 if(this.language=="zh"){
                     this.toast.warning( "", "请重试", this.toastOptions )
                 }else{
                     this.toast.warning( "", "Please retry", this.toastOptions )
-                }  
-              
+                }
+
                 this.set('codeTimeout', undefined)
             })
         }
