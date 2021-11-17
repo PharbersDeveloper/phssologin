@@ -64,7 +64,7 @@ export default Controller.extend({
                 const applicationAdapter = this.store.adapterFor('application')
                 const ajax = this.get("ajax")
 
-                applicationAdapter.set('path', "/phact/verifyEmail")
+                applicationAdapter.set('path', "/phpwd/verifyemail")
                 applicationAdapter.set('verb', "GET")
                 applicationAdapter.set('queryParams', {
                     email: userEmail
