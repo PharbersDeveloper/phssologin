@@ -126,15 +126,22 @@ export default Controller.extend({
             const applicationAdapter = this.store.adapterFor('application')
             const ajax = this.get("ajax")
 
-            applicationAdapter.set('path', "/phact/sendCode")
-            applicationAdapter.set('verb', "GET")
-            applicationAdapter.set('queryParams', {
-                to: userEmail
+            applicationAdapter.set('path', "/phpwd/phforgetpwd")
+            applicationAdapter.set('verb', "POST")
+            applicationAdapter.set('body', {
+                content_type: "forget_password",
+                target_address: [userEmail],
+                subject: "Pharbers Platform: Reset Possword",
+                attachments: []
             })
+            applicationAdapter.set('queryParams', {})
             applicationAdapter.toggleProperty('oauthRequest')
             const sendCodeRequest = applicationAdapter.get('request')
+
             ajax.request(  sendCodeRequest.url , {
-                headers: sendCodeRequest.headers
+                headers: sendCodeRequest.headers,
+                type: "POST",
+                data:  JSON.stringify(applicationAdapter.get('body'))
             } ).then(value => {
                 this.cookies.write('sendCodeDate', (new Date()).getTime(),{
                     domain: ".pharbers.com",
