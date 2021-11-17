@@ -75,7 +75,7 @@ export default Controller.extend({
                     headers: request.headers
                 } ).then( value => {
                 	// Send Email
-                    applicationAdapter.set('path', "/phemailrepwd")
+                    applicationAdapter.set('path', "/phpwd/phforgetpwd")
                     applicationAdapter.set('verb', "POST")
 					applicationAdapter.set('body', {
 						content_type: "forget_password",

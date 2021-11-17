@@ -44,7 +44,7 @@ export default Controller.extend({
 			this.set('haveMinuscules', 0)
 		}
 		if (this.atLeast8 === 1 && this.haveNumber === 1 && this.haveCapital === 1 && this.haveMinuscules === 1) {
-			
+
 			return 1  //如果新密码满足这四个条件，则返回1
 		}
 		return 0   //否则返回0
@@ -84,8 +84,8 @@ export default Controller.extend({
 				let userEmail = this.model.email
 				const applicationAdapter = this.store.adapterFor('application')
 				const ajax = this.get("ajax")
-				
-				applicationAdapter.set('path', "/phact/forgotPassword")
+
+				applicationAdapter.set('path', "/phpwd/phresetpwd")
 				applicationAdapter.set('verb', "POST")
                 applicationAdapter.set('body', {
                     "email": userEmail,
@@ -94,12 +94,9 @@ export default Controller.extend({
                 applicationAdapter.toggleProperty('oauthRequest')
                 const request = applicationAdapter.get('request')
 				ajax.request(  request.url , {
-					method: "POST",
 					headers: request.headers,
-					data: {
-						"email": userEmail,
-						"password": submitPassword
-					}
+					type: "POST",
+					data:  JSON.stringify(applicationAdapter.get('body'))
 				} ).then(value => {
 					this.transitionToRoute(`/resetSuccessPage?email=${userEmail}&redirect_uri=${this.model.redirect_uri}`)
 				}).catch(err => {
@@ -107,8 +104,8 @@ export default Controller.extend({
                         this.toast.warning( "", "请重新输入", this.toastOptions )
                     }else{
                         this.toast.warning( "", "Please retry", this.toastOptions )
-                    }  
-					
+                    }
+
 				})
 			} else {
 				//提示填写的格式错误
@@ -116,7 +113,7 @@ export default Controller.extend({
 					this.toast.error( "", "两个密码不一致", this.toastOptions )
 				}else{
 					this.toast.error( "", "The two passwords are inconsistent", this.toastOptions )
-				}  
+				}
 			}
 		}
     }
