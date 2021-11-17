@@ -78,7 +78,7 @@ export default Controller.extend({
                     //     key: userEmail,
                     //     code: `${this.verifyCode0}${this.verifyCode1}${this.verifyCode2}${this.verifyCode3}${this.verifyCode4}${this.verifyCode5}`
                     // })
-                    applicationAdapter.set('path', "/phusercodecheck")
+                    applicationAdapter.set('path', "/phpwd/phusercodecheck")
                     applicationAdapter.set('verb', "POST")
                     applicationAdapter.set('queryParams', {})
                     applicationAdapter.set('body', {
