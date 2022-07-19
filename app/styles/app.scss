@@ -626,3 +626,39 @@
 		}
 	}
 }
+
+.bottom-copyright {
+	height: 97px;
+	width: 100%;
+	background: 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: absolute;
+    bottom: 0;
+	padding: 0 60px;
+	border-top: 1px solid #e2e4e7;
+	
+	span {
+		font-size: 12px;
+    	color: #a2a5b0;
+	}
+
+	.bottom-copyright-left {
+		width: 55%;
+		height: auto;
+		display: flex;
+		justify-content: space-between;
+
+		.online-filing {
+			display: flex;
+			align-items: center;
+
+			.presented-logo {
+				width: 20px;
+				height: 20px;
+				margin-right: 4px;
+			}
+		}
+	}
+}
