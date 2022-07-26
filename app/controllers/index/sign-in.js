@@ -62,7 +62,7 @@ export default Controller.extend({
 			const ajax = this.get("ajax")
 			const password = CryptoJS.SHA256(this.password).toString()
 			
-			applicationAdapter.set('path', "/oauth/login")
+			applicationAdapter.set('path', "/phoauth/login")
 			applicationAdapter.set('verb', "GET")
 			applicationAdapter.set('queryParams', {
 				account: this.model.email,
@@ -80,7 +80,7 @@ export default Controller.extend({
 				const client_id = this.model.client_id ? this.model.client_id : this.actions.Decrypt("AB07EE4BF5CE23954C217D69F0E7784A3C5C5FACCEBD4995E44DE28B8692CDA3")
 				const state = this.model.state ? this.model.state : "xyz"
 				//AWS_IAM方式
-				applicationAdapter.set('path', "/oauth/authorization")
+				applicationAdapter.set('path', "/phoauth/authorization")
 				applicationAdapter.set('verb', "GET")
 				applicationAdapter.set('queryParams', {
 					user_id: loginSuccess.uid,
