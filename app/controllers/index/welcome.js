@@ -61,7 +61,7 @@ export default Controller.extend({
             } else {
                 this.set("isContinue", true)
 
-                applicationAdapter.set('path', "/phpwd/verifyemail")
+                applicationAdapter.set('path', "/phpwd/phaccounts")
 				applicationAdapter.set('verb', "GET")
                 applicationAdapter.set('queryParams', {
                     email: userEmail
